@@ -1,9 +1,9 @@
 input = -1
 
 # loop until user's input is correct
-while input == -1:
+while input < 0:
     try:
-        input = int(raw_input("Please enter a whole number: "))
+        input = int(raw_input("Please enter a whole number greater than 0: "))
     except:
         print "Incorrect value! Try again."
         continue
