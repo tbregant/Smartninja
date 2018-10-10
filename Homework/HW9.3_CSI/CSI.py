@@ -33,6 +33,11 @@ for id, val in dnac.iteritems():
             continue
         sc[dnac_type] = dnac_value
 
+# check if anything was found based on entered DNA
+if sc.__len__() == 0:
+    print "Unknown DNA"
+    exit()
+
 # suspects database
 sdb = { "Eva":{"Gender":"Female",
                "Race":"White",
@@ -55,25 +60,22 @@ sdb = { "Eva":{"Gender":"Female",
                 "Eye color":"Green",
                 "Face shape":"Square"}}
 
+hits = {}
+
+# populate hits dictionary with suspect database, set count at 0
+for suspect in sdb:
+    hits[suspect] = 0
+
 guilty = ""
 
-for id, val in sdb.iteritems():
-    for inner_id, inner_val in val.iteritems():
-        if inner_val == sc[inner_id]:
-            guilty = id
-        else:
-            break
+# count matching characteristics
+for name, caracteristics in sdb.iteritems():
+    for cname, cval in caracteristics.iteritems():
+        if cval == sc[cname]:
+            hits[name] += 1
+            if hits[name] == 5:
+                guilty = name
+                print name
 
-print "The suspect has " + sc["Hair color"] + " hair color, " + sc["Face shape"] + " Face shape, " \
-                         + sc["Eye color"] + " Eye color, " + sc["Gender"] + " Gender, " + sc["Race"] + " Race."
-print "Suspect's name is: " + guilty
-
-
-
-
-
-
-
-
-
-
+print "The suspect is {4} {3} with {0} hair, {2} eyes and {1} face".format(sc["Hair color"], sc["Face shape"], sc["Eye color"], sc["Gender"], sc["Race"])
+print "The suspect's name is: " + guilty
