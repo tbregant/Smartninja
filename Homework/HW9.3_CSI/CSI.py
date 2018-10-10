@@ -57,6 +57,8 @@ sdb = { "Eva":{"Gender":"Female",
 
 guilty = ""
 
+# TODO: create new list do count charecteristics for each person.
+
 for id, val in sdb.iteritems():
     for inner_id, inner_val in val.iteritems():
         if inner_val == sc[inner_id]:
