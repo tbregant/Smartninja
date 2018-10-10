@@ -73,9 +73,9 @@ for name, caracteristics in sdb.iteritems():
     for cname, cval in caracteristics.iteritems():
         if cval == sc[cname]:
             hits[name] += 1
-            if hits[name] == 5:
+            if hits[name] == dnac.__len__():
                 guilty = name
-                print name
+                break
 
 print "The suspect is {4} {3} with {0} hair, {2} eyes and {1} face".format(sc["Hair color"], sc["Face shape"], sc["Eye color"], sc["Gender"], sc["Race"])
 print "The suspect's name is: " + guilty
