@@ -1,0 +1,12 @@
+isinstnce("string", str) as
+
+napiši program ki bo med 2000 in 3200 našel številke ki so deljive s 7 ampak niso s 5
+
+map(funkcija, lista)
+
+.join združi v eno vrstico
+
+@property je dekorator
+definira da iz funkcije naredime spremenljivko in jo nato uproabimo kot navadno spremenljivko. Uporabimo jo lahko samo takrat, ko funkcija ne sprejema nobenih argumentov.
+ 
+
