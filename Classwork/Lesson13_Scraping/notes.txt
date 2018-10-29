@@ -1,0 +1,8 @@
+web scripts / Robots page:
+http://www.robotstxt.org/
+
+Http requests with python:
+http://docs.python-requests.org/en/master/
+
+Screen scraping library:
+https://www.crummy.com/software/BeautifulSoup/
