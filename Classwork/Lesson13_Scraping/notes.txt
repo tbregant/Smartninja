@@ -6,3 +6,6 @@ http://docs.python-requests.org/en/master/
 
 Screen scraping library:
 https://www.crummy.com/software/BeautifulSoup/
+
+
+Pages with JS loading cannot be parsed because they are not loaded entirely with http request.
