@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block vsebina %}
+
+    <h1>To je stran o Meni</h1>
+
+    {% if name  %}
+        <p>Pozdravljen {{name}}</p>
+    {% else %}
+        <p>Pozdravljen anonimnez!</p>
+    {% endif %}
+
+    <p>Kontaktiraj me:
+        <form method="post" action="/rezultat">
+            <input name="vnos">
+            <button type="submit">Objavi</button>
+        </form>
+    </p>
+
+{% endblock vsebina %}
