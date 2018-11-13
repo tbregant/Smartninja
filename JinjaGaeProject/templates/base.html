@@ -4,16 +4,27 @@
     <meta charset="UTF-8">
     <title>My SmartWebpage</title>
 
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    <ul>
-        <li><a href="/">Domov</a> </li>
-        <li><a href="/omeni">O meni</a></li>
-        <li><a href="/bmicalc">BMI kalkulator</a></li>
+<nav class="navbar navbar-dark bg-primary">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link text-light" href="/">Domov</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" href="/omeni">O meni</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" href="/bmicalc">BMI kalkulator</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" href="/kalkulator">Kalkulator</a>
+        </li>
     </ul>
-
-    {% block vsebina %}{% endblock vsebina %}
-
+</nav>
+    <div class="col">
+        {% block vsebina %}{% endblock vsebina %}
+    </div>
 </body>
 </html>

@@ -57,9 +57,44 @@ class BmiHandler(BaseHandler):
         return self.write("Tvoja visina je {}, teza: {}. Tvoj BMI indeks je: {}".format(visina, teza, bmi))
 
 
+class KalkulatorHandler(BaseHandler):
+    def get(self):
+        return self.render_template("kalkulator.html")
+
+    def post(self):
+        try:
+            prvo_stevilo = float(self.request.get("prvo_stevilo"))
+            drugo_stevilo = float(self.request.get("drugo_stevilo"))
+            operator = str(self.request.get("operator"))
+        except ValueError:
+            return "Vnesel si napacne podatke"
+
+
+        rezultat = 0
+        operator_znak = ''
+
+        if operator == 'plus':
+            rezultat = prvo_stevilo + drugo_stevilo
+            operator_znak = '+'
+        if operator == 'minus':
+            rezultat = prvo_stevilo - drugo_stevilo
+            operator_znak = '-'
+        if operator == 'krat':
+            rezultat = prvo_stevilo * drugo_stevilo
+            operator_znak = '*'
+        if operator == 'deljeno':
+            if drugo_stevilo == 0:
+                return self.write("Deljenje z 0 ni dovoljeno!")
+            else:
+                rezultat = prvo_stevilo / drugo_stevilo
+                operator_znak = '/'
+
+        return self.write("{} {} {} = {}".format(prvo_stevilo, operator_znak , drugo_stevilo, rezultat))
+
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
     webapp2.Route('/omeni', OmeniHandler),
     webapp2.Route('/rezultat', RezultatHandler),
     webapp2.Route('/bmicalc', BmiHandler),
+    webapp2.Route('/kalkulator', KalkulatorHandler),
 ], debug=True)

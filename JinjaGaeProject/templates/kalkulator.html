@@ -2,17 +2,29 @@
 
 {% block vsebina %}
 
-    <h1>BMI Calc</h1>
+    <h1>Kalkulator</h1>
 
     <div>
-        <p>Izracunaj si svoj BMI index:</p>
+        <p>Vnesi vrednosti in operator</p>
         <br>
-        <form method="post" action="/bmicalc">
-            Visina (v metrih): <input name="visina">
+        <form method="post" action="/kalkulator">
+            Prvo stevilo: <input name="prvo_stevilo">
             <br>
-            Teza v kilogramih: <input name="teza">
+            Operacija:
+            <div class="form-check-inline">
+                <input class="form-check-input ml-1" type="radio" name="operator" id="radio_sestevanje" value="plus" checked="checked">
+                <label class="form-check-label" for="radio_sestevanje">Sestevanje</label>
+                <input class="form-check-input ml-1" type="radio" name="operator" id="radio_odstevanje" value="minus">
+                <label class="form-check-label" for="radio_odstevanje">Odstevanje</label>
+                <input class="form-check-input ml-1" type="radio" name="operator" id="radio_mnozenje" value="krat">
+                <label class="form-check-label" for="radio_mnozenje">Mnozenje</label>
+                <input class="form-check-input ml-1" type="radio" name="operator" id="radio_deljenje" value="deljeno">
+                <label class="form-check-label" for="radio_mnozenje">Deljenje</label>
+            </div>
             <br>
-            <button type="submit">Izracunaj</button>
+            Drugo stevilo: <input name="drugo_stevilo">
+            <br>
+            <button class="btn btn-primary" type="submit">Izracunaj</button>
         </form>
     </div>
 
