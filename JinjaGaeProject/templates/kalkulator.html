@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block vsebina %}
+
+    <h1>BMI Calc</h1>
+
+    <div>
+        <p>Izracunaj si svoj BMI index:</p>
+        <br>
+        <form method="post" action="/bmicalc">
+            Visina (v metrih): <input name="visina">
+            <br>
+            Teza v kilogramih: <input name="teza">
+            <br>
+            <button type="submit">Izracunaj</button>
+        </form>
+    </div>
+
+{% endblock vsebina %}
