@@ -54,7 +54,13 @@ class BmiHandler(BaseHandler):
         visina = float(self.request.get("visina"))
         teza = float(self.request.get("teza"))
         bmi = teza / (visina**2)
-        return self.write("Tvoja visina je {}, teza: {}. Tvoj BMI indeks je: {}".format(visina, teza, bmi))
+        rezultat_izpis = "<table><tr><td>Visina:</td><td>{}</td></tr>" \
+                         "<tr><td>Teza:</td><td>{}</td></tr></table>" \
+                         "<br><p>Izracunan BMI indeks je: {}</p>".format(visina, teza, round(bmi,2))
+        params = {"rezultat": rezultat_izpis, "povratni_url": "/bmicalc"}
+        return self.render_template("prikazi_rezultat.html", params=params)
+
+        #return self.write("Tvoja visina je {}, teza: {}. Tvoj BMI indeks je: {}".format(visina, teza, bmi))
 
 
 class KalkulatorHandler(BaseHandler):
@@ -62,34 +68,45 @@ class KalkulatorHandler(BaseHandler):
         return self.render_template("kalkulator.html")
 
     def post(self):
+        rezultat_izpis = ""
+
         try:
             prvo_stevilo = float(self.request.get("prvo_stevilo"))
             drugo_stevilo = float(self.request.get("drugo_stevilo"))
             operator = str(self.request.get("operator"))
         except ValueError:
-            return "Vnesel si napacne podatke"
-
+            rezultat_izpis = "Vnesel si napacne podatke"
 
         rezultat = 0
-        operator_znak = ''
+        operator_znak = ""
 
-        if operator == 'plus':
-            rezultat = prvo_stevilo + drugo_stevilo
-            operator_znak = '+'
-        if operator == 'minus':
-            rezultat = prvo_stevilo - drugo_stevilo
-            operator_znak = '-'
-        if operator == 'krat':
-            rezultat = prvo_stevilo * drugo_stevilo
-            operator_znak = '*'
-        if operator == 'deljeno':
-            if drugo_stevilo == 0:
-                return self.write("Deljenje z 0 ni dovoljeno!")
-            else:
-                rezultat = prvo_stevilo / drugo_stevilo
-                operator_znak = '/'
+        try:
+            if operator == "plus":
+                rezultat = prvo_stevilo + drugo_stevilo
+                operator_znak = "+"
+            if operator == "minus":
+                rezultat = prvo_stevilo - drugo_stevilo
+                operator_znak = "-"
+            if operator == "krat":
+                rezultat = prvo_stevilo * drugo_stevilo
+                operator_znak = "*"
+            if operator == "deljeno":
+                if drugo_stevilo == 0:
+                    rezultat_izpis = "Deljenje z 0 ni dovoljeno!"
+                else:
+                    rezultat = prvo_stevilo / drugo_stevilo
+                    operator_znak = '/'
+        except UnboundLocalError:
+            rezultat_izpis = "Prislo je do napake pri izracunu!"
 
-        return self.write("{} {} {} = {}".format(prvo_stevilo, operator_znak , drugo_stevilo, rezultat))
+        if len(rezultat_izpis) == 0:
+            rezultat_izpis = "{} {} {} = {}".format(prvo_stevilo, operator_znak , drugo_stevilo, rezultat)
+
+        params = {"rezultat": rezultat_izpis, "povratni_url": "/kalkulator"}
+
+        return self.render_template("prikazi_rezultat.html", params=params)
+
+        #return self.write("{} {} {} = {}".format(prvo_stevilo, operator_znak , drugo_stevilo, rezultat))
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),

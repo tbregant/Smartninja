@@ -5,12 +5,18 @@
     <h1>Kalkulator indeksa telesne mase</h1>
 
     <div>
-        <p>Izracunaj si svoj BMI index:</p>
-        <br>
+        <h5>Izracunaj si BMI index:</h5>
         <form method="post" action="/bmicalc">
-            Visina (v metrih): <input name="visina">
-            <br>
-            Teza v kilogramih: <input name="teza">
+            <table>
+                <tr>
+                    <td>Visina (v metrih):</td>
+                    <td><input name="visina"></td>
+                </tr>
+                <tr>
+                    <td>Teza v kilogramih:</td>
+                    <td><input name="teza"></td>
+                </tr>
+            </table>
             <br>
             <button class="btn btn-primary" type="submit">Izracunaj</button>
         </form>

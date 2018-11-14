@@ -3,26 +3,32 @@
 {% block vsebina %}
 
     <h1>Kalkulator</h1>
-
     <div>
-        <p>Vnesi vrednosti in operator</p>
-        <br>
+        <h5>Vnesi vrednosti in izberi operator</h5>
         <form method="post" action="/kalkulator">
-            Prvo stevilo: <input name="prvo_stevilo">
-            <br>
-            Operacija:
-            <div class="form-check-inline">
-                <input class="form-check-input ml-1" type="radio" name="operator" id="radio_sestevanje" value="plus" checked="checked">
-                <label class="form-check-label" for="radio_sestevanje">Sestevanje</label>
-                <input class="form-check-input ml-1" type="radio" name="operator" id="radio_odstevanje" value="minus">
-                <label class="form-check-label" for="radio_odstevanje">Odstevanje</label>
-                <input class="form-check-input ml-1" type="radio" name="operator" id="radio_mnozenje" value="krat">
-                <label class="form-check-label" for="radio_mnozenje">Mnozenje</label>
-                <input class="form-check-input ml-1" type="radio" name="operator" id="radio_deljenje" value="deljeno">
-                <label class="form-check-label" for="radio_mnozenje">Deljenje</label>
-            </div>
-            <br>
-            Drugo stevilo: <input name="drugo_stevilo">
+            <table>
+                <tr>
+                    <td>Prvo stevilo:</td> <td><input name="prvo_stevilo"></td>
+                </tr>
+                <tr>
+                    <td>Operacija:</td>
+                    <td><div class="form-check-inline">
+                            <input class="form-check-input ml-1" type="radio" name="operator" id="radio_sestevanje" value="plus" checked="checked">
+                            <label class="form-check-label" for="radio_sestevanje">Sestevanje</label>
+                            <input class="form-check-input ml-1" type="radio" name="operator" id="radio_odstevanje" value="minus">
+                            <label class="form-check-label" for="radio_odstevanje">Odstevanje</label>
+                            <input class="form-check-input ml-1" type="radio" name="operator" id="radio_mnozenje" value="krat">
+                            <label class="form-check-label" for="radio_mnozenje">Mnozenje</label>
+                            <input class="form-check-input ml-1" type="radio" name="operator" id="radio_deljenje" value="deljeno">
+                            <label class="form-check-label" for="radio_mnozenje">Deljenje</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Drugo stevilo:</td>
+                    <td><input name="drugo_stevilo"></td>
+                </tr>
+            </table>
             <br>
             <button class="btn btn-primary" type="submit">Izracunaj</button>
         </form>
