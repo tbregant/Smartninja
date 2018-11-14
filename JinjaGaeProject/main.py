@@ -34,7 +34,7 @@ class MainHandler(BaseHandler):
 
 class OmeniHandler(BaseHandler):
     def get(self):
-        name = "Mazko"
+        name = "Bucman"
         params = {"name": name}
         # params = None
         return self.render_template("omeni.html", params=params)

@@ -2,19 +2,69 @@
 
 {% block vsebina %}
 
-    <h1>To je stran o Meni</h1>
+    <h1>O meni</h1>
 
     {% if name  %}
-        <p>Pozdravljen {{name}}</p>
+        <h4>Pozdravljen {{name}}, preberi si kaj o meni</h4>
     {% else %}
-        <p>Pozdravljen anonimnez!</p>
+        <h4>Pozdravljen anonimnez, preberi si kaj o meni</h4>
     {% endif %}
 
-    <p>Kontaktiraj me:
+    <br>
+    <div id="facts">
+        <h2>Dejstva o meni</h2>
+        <table id="kategorija">
+            <tr>
+                <td>Kraj</td>
+                <td>Kranj</td>
+            </tr>
+            <tr>
+                <td>Starost</td>
+                <td>99</td>
+            </tr>
+            <tr>
+                <td>Izobrazba</td>
+                <td>sm. Ninja</td>
+            </tr>
+            <tr>
+                <td>Hobi</td>
+                <td>Imam</td>
+            </tr>
+            <tr>
+                <td>Prijatelji</td>
+                <td>tut so</td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <br>
+    <div>
+        <h2>To pa sem jaz</h2>
+        <a href="/assets/img/profile.jpg" target="_blank">
+            <img id="slika" src="/assets/img/profile.jpg" width="250" alt="Profilna slika">
+        </a>
+    </div>
+
+    <br>
+    <br>
+    <div id="about">
+        <h2>Moja vsebina</h2>
+	    <p class="tekst">
+		    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer porta et ex aliquet tincidunt. Nulla vel sem nec orci tincidunt pulvinar. Mauris id auctor nunc, id ullamcorper sem. Phasellus posuere sapien ac lorem elementum, id luctus odio porta. Nunc id condimentum augue. Praesent vel augue mi. Nulla orci est, consectetur nec purus non, suscipit imperdiet leo. Proin sed massa nec dolor luctus laoreet. Proin a sollicitudin felis. Sed suscipit at nisi vel hendrerit. Vivamus a euismod eros. Nullam malesuada nulla ut enim elementum feugiat. Curabitur posuere dui vel pellentesque finibus. Aliquam iaculis lorem eget aliquet suscipit. Vestibulum a tortor blandit, faucibus elit blandit, finibus mauris. Nam tempus metus quis quam efficitur, id varius sapien auctor.
+        </p>
+        <p class = tekst>
+            Duis nulla eros, venenatis vitae gravida sed, pharetra a quam. Vestibulum rutrum sapien ut massa placerat, eget sodales ligula hendrerit. Ut commodo, ligula ac scelerisque porttitor, nisi ligula tempor magna, id aliquam lectus massa vitae metus. Maecenas sit amet lorem at est dignissim pharetra nec non diam. Donec luctus ipsum id sagittis pellentesque. Phasellus et urna risus. In arcu massa, laoreet scelerisque urna nec, commodo euismod diam.
+        </p>
+    </div>
+
+    <h2>Kontaktiraj me</h2>
+    <p>
         <form method="post" action="/rezultat">
             <input name="vnos">
             <button type="submit">Objavi</button>
         </form>
     </p>
+
+
 
 {% endblock vsebina %}
