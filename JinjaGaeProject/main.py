@@ -2,7 +2,7 @@
 import os
 import jinja2
 import webapp2
-
+from models import Sporocilo
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=False)
@@ -35,16 +35,22 @@ class MainHandler(BaseHandler):
 class OmeniHandler(BaseHandler):
     def get(self):
         name = "Bucman"
-        params = {"name": name}
+        # params = {"name": name}
         # params = None
+        rezultat = Sporocilo.query().fetch()
+        params = {"name": name,
+                  "sporocila": rezultat}
         return self.render_template("omeni.html", params=params)
-
 
 class RezultatHandler(BaseHandler):
     def post(self):
         vnos = self.request.get("vnos")
-        return self.write("Vnesel si: '{}'".format(vnos))
-
+        sp = Sporocilo(vnos=vnos)
+        sp.put() # sends to database
+        #return self.write("Vnesel si: '{}'".format(vnos))
+        rezultat_izpis = "Vnesel si: '{}'".format(vnos)
+        params = {"rezultat": rezultat_izpis, "povratni_url": "/omeni"}
+        return self.render_template("prikazi_rezultat.html", params=params)
 
 class BmiHandler(BaseHandler):
     def get(self):

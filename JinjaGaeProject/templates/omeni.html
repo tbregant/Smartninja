@@ -58,11 +58,19 @@
     </div>
 
     <h2>Kontaktiraj me</h2>
-    <p>
+    <div>
         <form method="post" action="/rezultat">
             <input name="vnos">
             <button type="submit">Objavi</button>
         </form>
+    </div>
+
+    <p>
+        <ul>
+        {% for sp in sporocila %}
+        <li>{{ sp.vnos }}</li>
+        {% endfor %}
+        </ul>
     </p>
 
 
