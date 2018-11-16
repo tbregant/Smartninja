@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block vsebina %}
+
+<h2>Poslji sporocilo</h2>
+
+<div>
+    <form method="post" action="/rezultat">
+        <table class="table">
+            <tr>
+                <td align="right">Ime in priimek</td>
+                <td><input name="ime" type="text" size="40" required></td>
+            </tr>
+            <tr>
+                <td align="right">E-mail</td>
+                <td><input name="email" type="email" size="40" pattern="+@+." required></td>
+            </tr>
+            <tr>
+                <td align="right" valign="top">Sporocilo</td>
+                <td><textarea name="sporocilo" cols="50" rows="5"></textarea></td>
+            </tr>
+            <tr>
+                <td/>
+                <td><button type="submit">Poslji</button></td>
+            </tr>
+        </table>
+
+
+
+        </form>
+    </div>
+
+{% endblock vsebina %}

@@ -42,15 +42,21 @@ class OmeniHandler(BaseHandler):
                   "sporocila": rezultat}
         return self.render_template("omeni.html", params=params)
 
+
 class RezultatHandler(BaseHandler):
     def post(self):
-        vnos = self.request.get("vnos")
-        sp = Sporocilo(vnos=vnos)
+        ime = self.request.get("ime")
+        email = self.request.get("email")
+        sporocilo = self.request.get("sporocilo")
+        sp = Sporocilo(ime=ime, email=email, sporocilo=sporocilo)
         sp.put() # sends to database
         #return self.write("Vnesel si: '{}'".format(vnos))
-        rezultat_izpis = "Vnesel si: '{}'".format(vnos)
-        params = {"rezultat": rezultat_izpis, "povratni_url": "/omeni"}
+        rezultat_izpis = "{}, hvala za sporocilo!".format(ime)
+        params = {"rezultat": rezultat_izpis,
+                  "povratni_url": "/",
+                  "heading": "Hvala!"}
         return self.render_template("prikazi_rezultat.html", params=params)
+
 
 class BmiHandler(BaseHandler):
     def get(self):
@@ -63,7 +69,9 @@ class BmiHandler(BaseHandler):
         rezultat_izpis = "<table><tr><td>Visina:</td><td>{}</td></tr>" \
                          "<tr><td>Teza:</td><td>{}</td></tr></table>" \
                          "<br><p>Izracunan BMI indeks je: {}</p>".format(visina, teza, round(bmi,2))
-        params = {"rezultat": rezultat_izpis, "povratni_url": "/bmicalc"}
+        params = {"rezultat": rezultat_izpis,
+                  "povratni_url": "/bmicalc",
+                  "heading": "Rezultat"}
         return self.render_template("prikazi_rezultat.html", params=params)
 
         #return self.write("Tvoja visina je {}, teza: {}. Tvoj BMI indeks je: {}".format(visina, teza, bmi))
@@ -108,16 +116,33 @@ class KalkulatorHandler(BaseHandler):
         if len(rezultat_izpis) == 0:
             rezultat_izpis = "{} {} {} = {}".format(prvo_stevilo, operator_znak , drugo_stevilo, rezultat)
 
-        params = {"rezultat": rezultat_izpis, "povratni_url": "/kalkulator"}
+        params = {"rezultat": rezultat_izpis,
+                  "povratni_url": "/kalkulator",
+                  "heading": "Rezultat"}
 
         return self.render_template("prikazi_rezultat.html", params=params)
 
         #return self.write("{} {} {} = {}".format(prvo_stevilo, operator_znak , drugo_stevilo, rezultat))
 
+
+class ContactHandler(MainHandler):
+    def get(self):
+        return self.render_template("contact.html")
+
+
+class SporocilaHandler(MainHandler):
+    def get(self):
+        sporocila = Sporocilo.query().fetch()
+        params = {"sporocila": sporocila}
+        return self.render_template("sporocila.html", params=params)
+
+
 app = webapp2.WSGIApplication([
-    webapp2.Route('/', MainHandler),
-    webapp2.Route('/omeni', OmeniHandler),
-    webapp2.Route('/rezultat', RezultatHandler),
-    webapp2.Route('/bmicalc', BmiHandler),
-    webapp2.Route('/kalkulator', KalkulatorHandler),
+    webapp2.Route("/", MainHandler),
+    webapp2.Route("/omeni", OmeniHandler),
+    webapp2.Route("/rezultat", RezultatHandler),
+    webapp2.Route("/bmicalc", BmiHandler),
+    webapp2.Route("/kalkulator", KalkulatorHandler),
+    webapp2.Route("/contact", ContactHandler),
+    webapp2.Route("/sporocila", SporocilaHandler),
 ], debug=True)

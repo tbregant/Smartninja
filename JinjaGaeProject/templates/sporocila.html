@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block vsebina %}
+
+<table class="table table-bordered">
+    <thead class="thead-light">
+        <tr>
+            <th style="width: 10%">Posiljatelj</th>
+            <th style="width: 15%">E-mail naslov</th>
+            <th style="width: 65%">Sporocilo</th>
+            <th style="width: 10%">Cas sporocila</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sp in sporocila %}
+        <tr>
+            <td>{{ sp.ime }}</td>
+            <td><a href="mailto:{{ sp.email }}">{{ sp.email }}</a></td>
+            <td>{{ sp.sporocilo }}</td>
+            <td>{{ sp.datum_vpis.strftime('%d.%m.%Y %H:%M:%S') }}</td>
+        {% endfor %}
+        </tr>
+    </tbody>
+</table>
+
+{% endblock vsebina %}

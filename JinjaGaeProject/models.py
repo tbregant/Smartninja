@@ -2,5 +2,7 @@ from google.appengine.ext import ndb
 
 
 class Sporocilo(ndb.Model):
-    vnos = ndb.StringProperty()
-    nastanek = ndb.DateTimeProperty(auto_now_add=True)
+    ime = ndb.StringProperty()
+    email = ndb.StringProperty()
+    sporocilo = ndb.TextProperty()
+    datum_vpis = ndb.DateTimeProperty(auto_now_add=True)
