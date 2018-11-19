@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Izbrisi {% endblock title %}
+
+{% block vsebina %}
+
+
+        <h1>Ali res želiš izbrisati to sporočilo?</h1>
+
+        <form action="/sporocilo/{{ sporocilo.key.id() }}/izbrisi" method="post">
+                <button type="submit">DA, izbriši</button>
+        </form>
+
+
+
+{% endblock vsebina %}

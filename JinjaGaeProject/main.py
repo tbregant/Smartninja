@@ -137,6 +137,31 @@ class SporocilaHandler(MainHandler):
         return self.render_template("sporocila.html", params=params)
 
 
+class UrediSporociloHandler(BaseHandler):
+    def get(self, sporocilo_id):
+        sporocilo = Sporocilo.get_by_id(int(sporocilo_id))
+        params = {"sporocilo": sporocilo}
+        return self.render_template("uredi_sporocilo.html", params=params)
+
+    def post(self, sporocilo_id):
+        nov_vnos = self.request.get("vnos")
+        sporocilo = Sporocilo.get_by_id(int(sporocilo_id))
+        sporocilo.sporocilo = nov_vnos
+        sporocilo.put()
+        return self.redirect_to("seznam-sporocil")
+
+
+class IzbrisiSporociloHandler(BaseHandler):
+    def get(self, sporocilo_id):
+            sporocilo = Sporocilo.get_by_id(int(sporocilo_id))
+            params = {"sporocilo": sporocilo}
+            return self.render_template("izbrisi_sporocilo.html", params=params)
+
+    def post(self, sporocilo_id):
+        sporocilo = Sporocilo.get_by_id(int(sporocilo_id))
+        sporocilo.key.delete()
+        return self.redirect_to("seznam-sporocil")
+
 app = webapp2.WSGIApplication([
     webapp2.Route("/", MainHandler),
     webapp2.Route("/omeni", OmeniHandler),
@@ -144,5 +169,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route("/bmicalc", BmiHandler),
     webapp2.Route("/kalkulator", KalkulatorHandler),
     webapp2.Route("/contact", ContactHandler),
-    webapp2.Route("/sporocila", SporocilaHandler),
+    webapp2.Route("/sporocila", SporocilaHandler, name="seznam-sporocil"),
+    webapp2.Route("/sporocilo/<sporocilo_id:\d+>/uredi", UrediSporociloHandler),
+    webapp2.Route('/sporocilo/<sporocilo_id:\d+>/izbrisi', IzbrisiSporociloHandler),
 ], debug=True)
+
