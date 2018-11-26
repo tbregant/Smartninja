@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Uredi {% endblock title %}
+{% block title %} Uredi {% endblock title %}
 
 {% block vsebina %}
 
 
     <form action="/sporocilo/{{ sporocilo.key.id() }}/uredi" method="post">
-            <input name="vnos" value="{{ sporocilo.vnos }}">
+
+            <textarea name="vnos" value="{{ sporocilo.sporocilo }}" cols="50" rows="5">{{ sporocilo.sporocilo }}</textarea>
 
             <button type="submit">OK</button>
     </form>
