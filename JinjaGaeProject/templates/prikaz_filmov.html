@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block vsebina %}
+
+<h2>Vsi filmi</h2>
+
+{% for film in filmi %}
+    <div>
+        {{ film.naslov }}
+        {{ film.reziser }}
+        {{ film.glavni_igralec }}
+        {{ film.zanr }}
+        {{ film.leto_produkcije }}
+        {{ film.ocena }}
+        {{ film.slika }}
+        {{ film.ogledano }}
+        {{ film.komentar }}
+        {{ film.datum_vnosa }}
+
+
+    </div>
+{% endfor %}
+
+{% endblock vsebina %}

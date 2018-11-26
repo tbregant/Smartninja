@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block vsebina %}
+
+<h2>Poslji sporocilo</h2>
+
+<div>
+    <form method="post" action="/dodaj_film">
+        <table class="table">
+            <tr>
+                <td align="right">Naslov</td>
+                <td><input name="naslov" type="text" size="40" required></td>
+            </tr>
+            <tr>
+                <td align="right">Reziser</td>
+                <td><input name="reziser" type="text" size="40" required></td>
+            </tr>
+            <tr>
+                <td align="right">Glavni igalec</td>
+                <td><input name="glavni_igralec" type="text" size="40" required></td>
+            </tr>
+            <tr>
+                <td align="right">Zanr</td>
+                <td><input name="zanr" type="text" size="40" required></td>
+            </tr>
+            <tr>
+                <td align="right">Leto produkcije</td>
+                <td><input name="leto_produkcije" type="text" size="40" required></td>
+            </tr>
+            <tr>
+                <td align="right">Ocena</td>
+                <td>
+                    <select name="ocena">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Slika</td>
+                <td><input name="slika" type="text" size="40" required></td>
+            </tr>
+            <tr>
+                <td align="right">Ogledano</td>
+                <td>
+                    <input type="radio" name="ogledano" value="1"> Da
+                    <input type="radio" name="ogledano" value="0"> Ne
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Komentar</td>
+                <td><textarea name="komentar" cols="50" rows="5"></textarea></td>
+            </tr>
+            <tr>
+                <td/>
+                <td><button type="submit">Shrani</button></td>
+            </tr>
+        </table>
+
+        </form>
+    </div>
+
+{% endblock vsebina %}

@@ -3,6 +3,7 @@ import os
 import jinja2
 import webapp2
 from models import Sporocilo
+from models import Filmi
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=False)
@@ -162,6 +163,48 @@ class IzbrisiSporociloHandler(BaseHandler):
         sporocilo.key.delete()
         return self.redirect_to("seznam-sporocil")
 
+
+class FilmiHandler(BaseHandler):
+    def get(self):
+        return self.render_template("vnos_filmov.html")
+
+    def post(self):
+        naslov = self.request.get("naslov")
+        reziser = self.request.get("reziser")
+        glavni_igralec = self.request.get("glavni_igalec")
+        zanr = self.request.get("zanr")
+        leto_produkcije = int(self.request.get("leto_produkcije"))
+        ocena = int(self.request.get("ocena"))
+        slika = self.request.get("slika")
+        ogledano = int(self.request.get("ogledano"))
+        komentar = self.request.get("komentar")
+
+        if ogledano == 1:
+            ogledano = True
+        else:
+            ogledano = False
+
+
+        film = Filmi(naslov=naslov,
+                     reziser=reziser,
+                     glavni_igralec=glavni_igralec,
+                     zanr=zanr,
+                     leto_produkcije=leto_produkcije,
+                     ocena=ocena,
+                     slika=slika,
+                     ogledano=ogledano,
+                     komentar=komentar)
+        film.put()
+        return self.redirect_to("filmi")
+
+
+class PrikazFilmiHandler(BaseHandler):
+    def get(self):
+        all_films = Filmi.query().fetch()
+        params = {"filmi": all_films}
+
+        return self.render_template("prikaz_filmov.html", params=params)
+
 app = webapp2.WSGIApplication([
     webapp2.Route("/", MainHandler),
     webapp2.Route("/omeni", OmeniHandler),
@@ -171,6 +214,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route("/contact", ContactHandler),
     webapp2.Route("/sporocila", SporocilaHandler, name="seznam-sporocil"),
     webapp2.Route("/sporocilo/<sporocilo_id:\d+>/uredi", UrediSporociloHandler),
-    webapp2.Route('/sporocilo/<sporocilo_id:\d+>/izbrisi', IzbrisiSporociloHandler),
+    webapp2.Route("/sporocilo/<sporocilo_id:\d+>/izbrisi", IzbrisiSporociloHandler),
+    webapp2.Route("/dodaj_film", FilmiHandler, name="filmi"),
+    webapp2.Route("/prikazi_filme", PrikazFilmiHandler),
 ], debug=True)
 
