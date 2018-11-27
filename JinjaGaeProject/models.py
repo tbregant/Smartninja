@@ -19,3 +19,4 @@ class Filmi(ndb.Model):
     ogledano = ndb.BooleanProperty(required=True)
     datum_vnosa = ndb.DateTimeProperty(auto_now_add=True)
     komentar = ndb.TextProperty()
+    datum_spremembe = ndb.DateTimeProperty()

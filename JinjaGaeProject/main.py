@@ -4,6 +4,7 @@ import jinja2
 import webapp2
 from models import Sporocilo
 from models import Filmi
+import datetime
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=False)
@@ -166,12 +167,15 @@ class IzbrisiSporociloHandler(BaseHandler):
 
 class FilmiHandler(BaseHandler):
     def get(self):
-        return self.render_template("vnos_filmov.html")
+        now = datetime.datetime.now().year
+        params = {"leto_max": now,
+                  "leto_min": 1880}
+        return self.render_template("vnos_filmov.html", params=params)
 
     def post(self):
         naslov = self.request.get("naslov")
         reziser = self.request.get("reziser")
-        glavni_igralec = self.request.get("glavni_igalec")
+        glavni_igralec = self.request.get("glavni_igralec")
         zanr = self.request.get("zanr")
         leto_produkcije = int(self.request.get("leto_produkcije"))
         ocena = int(self.request.get("ocena"))
@@ -183,7 +187,6 @@ class FilmiHandler(BaseHandler):
             ogledano = True
         else:
             ogledano = False
-
 
         film = Filmi(naslov=naslov,
                      reziser=reziser,
@@ -200,10 +203,54 @@ class FilmiHandler(BaseHandler):
 
 class PrikazFilmiHandler(BaseHandler):
     def get(self):
-        all_films = Filmi.query().fetch()
+        all_films = Filmi.query().order(Filmi.naslov).fetch()
         params = {"filmi": all_films}
 
         return self.render_template("prikaz_filmov.html", params=params)
+
+class UrediFilmHandler(BaseHandler):
+    def get(self, film_id):
+        film = Filmi.get_by_id(int(film_id))
+        now = datetime.datetime.now().year
+        params = {"film": film,
+                  "leto": now}
+        return self.render_template("uredi_film.html", params=params)
+
+    def post(self, film_id):
+        nov_naslov = self.request.get("naslov")
+        nov_reziser = self.request.get("reziser")
+        nov_glavni_igralec = self.request.get("glavni_igralec")
+        nov_zanr = self.request.get("zanr")
+        nov_leto_produkcije = int(self.request.get("leto_produkcije"))
+        nov_ocena = int(self.request.get("ocena"))
+        nov_slika = self.request.get("slika")
+        nov_ogledano = int(self.request.get("ogledano"))
+        nov_komentar = self.request.get("komentar")
+
+        if nov_ogledano == 1:
+            nov_ogledano = True
+        else:
+            nov_ogledano = False
+
+        if nov_slika.startswith("http") == False:
+            nov_slika = ""
+
+        obstojec_film = Filmi.get_by_id(int(film_id))
+        obstojec_film.naslov = nov_naslov
+        obstojec_film.reziser = nov_reziser
+        obstojec_film.glavni_igralec = nov_glavni_igralec
+        obstojec_film.zanr = nov_zanr
+        obstojec_film.leto_produkcije = nov_leto_produkcije
+        obstojec_film.ocena = nov_ocena
+        obstojec_film.slika = nov_slika
+        obstojec_film.ogledano = nov_ogledano
+        obstojec_film.komentar = nov_komentar
+        obstojec_film.datum_spremembe = datetime.datetime.now()
+
+        obstojec_film.put()
+
+        return self.redirect_to("seznam_filmi")
+
 
 app = webapp2.WSGIApplication([
     webapp2.Route("/", MainHandler),
@@ -216,6 +263,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route("/sporocilo/<sporocilo_id:\d+>/uredi", UrediSporociloHandler),
     webapp2.Route("/sporocilo/<sporocilo_id:\d+>/izbrisi", IzbrisiSporociloHandler),
     webapp2.Route("/dodaj_film", FilmiHandler, name="filmi"),
-    webapp2.Route("/prikazi_filme", PrikazFilmiHandler),
+    webapp2.Route("/prikazi_filme", PrikazFilmiHandler, name="seznam_filmi"),
+    webapp2.Route("/film/<film_id:\d+>/uredi", UrediFilmHandler),
+
 ], debug=True)
 

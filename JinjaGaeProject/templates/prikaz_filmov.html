@@ -1,24 +1,87 @@
 {% extends "base.html" %}
 
 {% block vsebina %}
+<br/>
+<h2>Seznam filmov</h2>
+{% set count = 0 %}
 
-<h2>Vsi filmi</h2>
+<div class="container">
+    <div class="row">
+        {% for film in filmi %}
+        {% set count = count +1 %}
 
-{% for film in filmi %}
-    <div>
-        {{ film.naslov }}
-        {{ film.reziser }}
-        {{ film.glavni_igralec }}
-        {{ film.zanr }}
-        {{ film.leto_produkcije }}
-        {{ film.ocena }}
-        {{ film.slika }}
-        {{ film.ogledano }}
-        {{ film.komentar }}
-        {{ film.datum_vnosa }}
-
-
+        <div class="col-6">
+            <table class="table p-3 mb-2 bg-secondary text-white">
+                <tr>
+                    <td colspan="2" class="bg-dark text-white"><h6>#{{count }} - {{ film.naslov }}</h6></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center">
+                        {% if film.slika != "" %}
+                        <img class="img-fluid" src="{{ film.slika }}" alt="slika"></td>
+                        {% else %}
+                        <img class="img-fluid" src="/assets/img/profile.jpg" alt="slika"></td>
+                        {% endif %}
+                </tr>
+                <tr>
+                    <td>Reziser</td>
+                    <td>{{ film.reziser }}</td>
+                </tr>
+                <tr>
+                    <td>Glavni igralec</td>
+                    <td>{{ film.glavni_igralec }}</td>
+                </tr>
+                <tr>
+                    <td>Zanr</td>
+                    <td>{{ film.zanr }}</td>
+                </tr>
+                <tr>
+                    <td>Leto produkcije</td>
+                    <td>{{ film.leto_produkcije }}</td>
+                </tr>
+                <tr>
+                    <td>Ocena</td>
+                    <td>
+                    {% for star in range(film.ocena) %}
+                    <img src="/assets/img/star.png" alt="star" width="15px" height="15px">
+                    {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ogledano</td>
+                    <td>
+                        {% if film.ogledano == True %}
+                            <input type="checkbox" name="ogledano" value="da" onclick="return false" checked>
+                        {% else %}
+                            <input type="checkbox" name="ogledano" value="ne" onclick="return false" >
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Komentar</td>
+                    <td>{{ film.komentar }}</td>
+                </tr>
+                <tr>
+                    <td>Datum vnosa</td>
+                    <td>{{ film.datum_vnosa.strftime('%d.%m.%Y %H:%M:%S') }}</td>
+                </tr>
+                {% if film.datum_spremembe != None %}
+                <tr>
+                    <td>Datum spremembe</td>
+                    <td>{{ film.datum_spremembe.strftime('%d.%m.%Y %H:%M:%S') }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td colspan="2" class="text-center">
+                        <a href="/film/{{ film.key.id() }}/uredi" class="btn btn-light" role="button">Uredi</a>
+                        <a href="/film/{{ film.key.id() }}/brisi" class="btn btn-danger" role="button">Brisi</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        {% endfor %}
     </div>
-{% endfor %}
+</div>
+
 
 {% endblock vsebina %}

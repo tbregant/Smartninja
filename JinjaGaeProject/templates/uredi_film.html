@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block vsebina %}
+
+<h2>Uredi film</h2>
+
+<div>
+    <form method="post" action="/film/{{ film.key.id() }}/uredi">
+        <table class="table">
+            <tr>
+                <td align="right">Naslov</td>
+                <td><input name="naslov" type="text" size="40" required value="{{ film.naslov }}"></td>
+            </tr>
+            <tr>
+                <td align="right">Reziser</td>
+                <td><input name="reziser" type="text" size="40" required value="{{ film.reziser }}"></td>
+            </tr>
+            <tr>
+                <td align="right">Glavni igralec</td>
+                <td><input name="glavni_igralec" type="text" size="40" required value="{{ film.glavni_igralec }}"></td>
+            </tr>
+            <tr>
+                <td align="right">Zanr</td>
+                <td><input name="zanr" type="text" size="40" required value="{{ film.zanr }}"></td>
+            </tr>
+            <tr>
+                <td align="right">Leto produkcije</td>
+                <td><input name="leto_produkcije" type="text" size="40" required value="{{ film.leto_produkcije }}"></td>
+            </tr>
+            <tr>
+                <td align="right">Ocena</td>
+                <td>
+                    <select class="selectpicker show-tick" name="ocena">
+                        {% for val in range(1,6) %}
+                            {% if val == film.ocena %}
+                                <option value={{ '"' }}{{ val }}{{ '"' }} selected>{{ val }}</option>
+
+                            {% else %}
+                                <option value={{ '"' }}{{ val }}{{ '"' }}>{{ val }}</option>
+                            {% endif %}
+                        {% endfor %}
+
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Slika</td>
+                <td><input name="slika" type="text" size="40" value="{{ film.slika }}"></td>
+            </tr>
+            <tr>
+                <td align="right">Ogledano</td>
+                <td>
+                    {% if film.ogledano == True %}
+                        <input type="radio" name="ogledano" value="1" checked> Da
+                        <input type="radio" name="ogledano" value="0"> Ne
+                    {% else %}
+                        <input type="radio" name="ogledano" value="1"> Da
+                        <input type="radio" name="ogledano" value="0" checked> Ne
+                    {% endif %}
+
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Komentar</td>
+                <td><textarea name="komentar" cols="50" rows="5">{{ film.komentar }}</textarea></td>
+            </tr>
+            <tr>
+                <td/>
+                <td><button type="submit">Shrani</button></td>
+            </tr>
+        </table>
+
+        </form>
+    </div>
+
+{% endblock vsebina %}
