@@ -6,7 +6,7 @@
 
 <div>
     <form method="post" action="/dodaj_film">
-      
+
         <table class="table">
             <tr>
                 <td align="right">Naslov</td>
@@ -14,11 +14,11 @@
             </tr>
             <tr>
                 <td align="right">Reziser</td>
-                <td><input name="reziser" type="text" size="40" required></td>
+                <td><input name="reziser" type="text" size="40"></td>
             </tr>
             <tr>
                 <td align="right">Glavni igalec</td>
-                <td><input name="glavni_igralec" type="text" size="40" required></td>
+                <td><input name="glavni_igralec" type="text" size="40"></td>
             </tr>
             <tr>
                 <td align="right">Zanr</td>
@@ -32,6 +32,7 @@
                 <td align="right">Ocena</td>
                 <td>
                     <select name="ocena">
+                        <option value="0">brez ocene</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -42,7 +43,7 @@
             </tr>
             <tr>
                 <td align="right">Slika</td>
-                <td><input name="slika" type="text" size="40" required></td>
+                <td><input name="slika" type="url" size="40"></td>
             </tr>
             <tr>
                 <td align="right">Ogledano</td>

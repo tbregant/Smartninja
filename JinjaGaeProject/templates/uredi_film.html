@@ -13,11 +13,11 @@
             </tr>
             <tr>
                 <td align="right">Reziser</td>
-                <td><input name="reziser" type="text" size="40" required value="{{ film.reziser }}"></td>
+                <td><input name="reziser" type="text" size="40" value="{{ film.reziser }}"></td>
             </tr>
             <tr>
                 <td align="right">Glavni igralec</td>
-                <td><input name="glavni_igralec" type="text" size="40" required value="{{ film.glavni_igralec }}"></td>
+                <td><input name="glavni_igralec" type="text" size="40" value="{{ film.glavni_igralec }}"></td>
             </tr>
             <tr>
                 <td align="right">Zanr</td>
@@ -31,15 +31,22 @@
                 <td align="right">Ocena</td>
                 <td>
                     <select class="selectpicker show-tick" name="ocena">
-                        {% for val in range(1,6) %}
+                        {% for val in range(6) %}
                             {% if val == film.ocena %}
+                                {% if val > 0 %}
                                 <option value={{ '"' }}{{ val }}{{ '"' }} selected>{{ val }}</option>
+                                {% else %}
+                                <option value={{ '"' }}{{ val }}{{ '"' }} selected>Brez ocene</option>
+                                {% endif %}
 
                             {% else %}
+                                {% if val > 0 %}
                                 <option value={{ '"' }}{{ val }}{{ '"' }}>{{ val }}</option>
+                                {% else %}
+                                <option value={{ '"' }}{{ val }}{{ '"' }}>Brez ocene</option>
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
-
                     </select>
                 </td>
             </tr>

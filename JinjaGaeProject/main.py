@@ -251,6 +251,17 @@ class UrediFilmHandler(BaseHandler):
 
         return self.redirect_to("seznam_filmi")
 
+class BrisiFilmHandler(BaseHandler):
+    def get(self, film_id):
+        film = Filmi.get_by_id(int(film_id))
+        params = {"sporocilo": film}
+        return self.render_template("izbrisi_film.html", params=params)
+
+    def post(self, film_id):
+        film = Filmi.get_by_id(int(film_id))
+        film.key.delete()
+        return self.redirect_to("seznam_filmi")
+
 
 app = webapp2.WSGIApplication([
     webapp2.Route("/", MainHandler),
@@ -265,6 +276,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route("/dodaj_film", FilmiHandler, name="filmi"),
     webapp2.Route("/prikazi_filme", PrikazFilmiHandler, name="seznam_filmi"),
     webapp2.Route("/film/<film_id:\d+>/uredi", UrediFilmHandler),
+    webapp2.Route("/film/<film_id:\d+>/brisi", BrisiFilmHandler),
 
 ], debug=True)
 

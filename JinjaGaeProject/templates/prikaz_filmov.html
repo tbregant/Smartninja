@@ -42,9 +42,13 @@
                 <tr>
                     <td>Ocena</td>
                     <td>
-                    {% for star in range(film.ocena) %}
-                    <img src="/assets/img/star.png" alt="star" width="15px" height="15px">
-                    {% endfor %}
+                    {% if film.ocena > 0 %}
+                        {% for star in range(film.ocena) %}
+                        <img src="/assets/img/star.png" alt="star" width="15px" height="15px">
+                        {% endfor %}
+                    {% else %}
+                        <div>Film nima ocene</div>
+                    {% endif %}
                     </td>
                 </tr>
                 <tr>
