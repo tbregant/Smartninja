@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block vsebina %}
+
+    <h1>Vreme</h1>
+
+    <p>Opis: {{ podatki.weather[0].description }}</p>
+    <p>Trenutna temperatura: {{ podatki.main.temp }} &deg;C</p>
+    <p>Vlažnost: {{ podatki.main.humidity }} %</p>
+
+{% endblock vsebina %}
+

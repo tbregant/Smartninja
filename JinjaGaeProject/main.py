@@ -5,6 +5,10 @@ import webapp2
 from models import Sporocilo
 from models import Filmi
 import datetime
+from google.appengine.api import users
+import json
+from google.appengine.api import urlfetch
+
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=False)
@@ -31,8 +35,19 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
     def get(self):
-        return self.render_template("home.html")
+        user = users.get_current_user()
+        if user:
+            logiran = True
+            logout_url = users.create_logout_url('/')
 
+            params = {"logiran": logiran, "logout_url": logout_url, "user": user}
+        else:
+            logiran = False
+            login_url = users.create_login_url('/')
+
+            params = {"logiran": logiran, "login_url": login_url, "user": user}
+
+        return self.render_template("base.html", params)
 
 class OmeniHandler(BaseHandler):
     def get(self):
@@ -263,6 +278,25 @@ class BrisiFilmHandler(BaseHandler):
         return self.redirect_to("seznam_filmi")
 
 
+class PeopleHandler(BaseHandler):
+    def get(self):
+        with open("people.json", "r") as json_file:
+            data = json_file.read()
+        json_data = json.loads(data)
+        params = {"people": json_data}
+        return self.render_template("people.html", params=params)
+
+
+class WeatherHandler(BaseHandler):
+    def get(self):
+        url = "http://api.openweathermap.org/data/2.5/weather?q=Ljubljana&units=metric&appid=ba38f32aad601e14b2204526f86792e8&unit=metric"
+        result = urlfetch.fetch(url)
+        podatki = json.loads(result.content)
+        params = {"podatki": podatki}
+
+        self.render_template("weather.html", params)
+
+
 app = webapp2.WSGIApplication([
     webapp2.Route("/", MainHandler),
     webapp2.Route("/omeni", OmeniHandler),
@@ -277,6 +311,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route("/prikazi_filme", PrikazFilmiHandler, name="seznam_filmi"),
     webapp2.Route("/film/<film_id:\d+>/uredi", UrediFilmHandler),
     webapp2.Route("/film/<film_id:\d+>/brisi", BrisiFilmHandler),
+    webapp2.Route("/people", PeopleHandler),
+    webapp2.Route("/weather", WeatherHandler),
 
 ], debug=True)
 
